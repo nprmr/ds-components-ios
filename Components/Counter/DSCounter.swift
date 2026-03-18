@@ -34,12 +34,12 @@ struct DSCounter: View {
             .font(.system(size: 11, weight: .semibold))
             .lineSpacing(2) // 13 - 11
             .tracking(0.06)
-            .foregroundStyle(Color.counterText)
+            .foregroundStyle(DSColorToken.icotexLightFixed)
             .padding(4)
             .frame(width: 20, height: 20)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.counterBg)
+                    .fill(DSColorToken.surfaceNegative)
             )
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
@@ -48,12 +48,10 @@ struct DSCounter: View {
 
     private var smallDot: some View {
         Circle()
-            .fill(Color.counterBg)
+            .fill(DSColorToken.surfaceNegative)
             .frame(width: 8, height: 8)
             .frame(width: 20, height: 20)
     }
-
-    // MARK: - Display Text
 
     private var displayText: String {
         count > 9 ? "9+" : "\(count)"

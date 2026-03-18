@@ -55,24 +55,24 @@ private struct PillChipButtonStyle: ButtonStyle {
     }
 
     private func fillColor(isPressed: Bool) -> Color {
-        if state == .disabled { return .chipDisabledBg }
-        if isPressed { return .chipPressedBg }
+        if state == .disabled { return DSColorToken.interactActionDisabled }
+        if isPressed { return DSColorToken.interactActionPressed }
         switch state {
-        case .default: return .chipDefaultBg
-        case .active: return .chipActiveBg
-        case .pressed: return .chipPressedBg
-        case .disabled: return .chipDisabledBg
+        case .default: return DSColorToken.surfaceTertiary
+        case .active: return DSColorToken.surfaceAccent
+        case .pressed: return DSColorToken.interactActionPressed
+        case .disabled: return DSColorToken.interactActionDisabled
         }
     }
 
     private func textColor(isPressed: Bool) -> Color {
-        if state == .disabled { return .chipDisabledText }
-        if isPressed { return .chipPressedText }
+        if state == .disabled { return DSColorToken.interactIcotexDisable }
+        if isPressed { return DSColorToken.icotexSecondary }
         switch state {
-        case .default: return .chipDefaultText
-        case .active: return .chipActiveText
-        case .pressed: return .chipPressedText
-        case .disabled: return .chipDisabledText
+        case .default: return DSColorToken.icotexPrimary
+        case .active: return DSColorToken.icotexPrimaryInverted
+        case .pressed: return DSColorToken.icotexSecondary
+        case .disabled: return DSColorToken.interactIcotexDisable
         }
     }
 }

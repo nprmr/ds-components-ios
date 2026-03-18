@@ -24,8 +24,13 @@ targets:
         type: group
     settings:
       base:
-        INFOPLIST_GENERATION_MODE: GeneratedFile
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
         GENERATE_INFOPLIST_FILE: "YES"
         PRODUCT_BUNDLE_IDENTIFIER: com.ds.preview.app
+    info:
+      path: DSComponentsPreview/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true

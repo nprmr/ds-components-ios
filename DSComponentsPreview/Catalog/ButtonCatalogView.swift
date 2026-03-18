@@ -27,7 +27,7 @@ struct ButtonCatalogView: View {
 
                 sectionView("Fixed (on dark)") {
                     ZStack {
-                        Color(hex: "1E2128")
+                        DSColorToken.surfaceInverted
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                         VStack(spacing: 12) {
                             DSButton("Large", size: .large, mode: .fixed) {}

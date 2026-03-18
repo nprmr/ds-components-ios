@@ -131,8 +131,6 @@ private struct DSButtonStyle: ButtonStyle {
             .contentShape(Rectangle())
     }
 
-    // MARK: - Height
-
     private var height: CGFloat {
         switch size {
         case .large: 56
@@ -141,13 +139,9 @@ private struct DSButtonStyle: ButtonStyle {
         }
     }
 
-    // MARK: - Full Width
-
     private var isFullWidth: Bool {
         mode != .ghost
     }
-
-    // MARK: - Padding
 
     private var paddingH: CGFloat {
         switch mode {
@@ -169,7 +163,6 @@ private struct DSButtonStyle: ButtonStyle {
             case .medium, .small: return 0
             }
         case .primary, .secondary, .fixed:
-            // Vertical centering handled by .frame(height:)
             return 0
         }
     }
@@ -180,7 +173,6 @@ private struct DSButtonStyle: ButtonStyle {
     private func backgroundView(isPressed: Bool) -> some View {
         switch mode {
         case .ghost:
-            // Ghost small has cornerRadius 4
             if size == .small {
                 Color.clear
                     .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
@@ -189,7 +181,7 @@ private struct DSButtonStyle: ButtonStyle {
             }
         default:
             if isDisabled {
-                Capsule().fill(Color.buttonDisabledBg)
+                Capsule().fill(DSColorToken.interactActionDisabled)
             } else if isPressed {
                 backgroundForPressed
             } else {
@@ -202,11 +194,11 @@ private struct DSButtonStyle: ButtonStyle {
     private var backgroundForRest: some View {
         switch mode {
         case .primary:
-            Capsule().fill(Color.buttonPrimaryRest)
+            Capsule().fill(DSColorToken.surfaceAccent)
         case .secondary:
-            Capsule().fill(Color.buttonSecondaryRest)
+            Capsule().fill(DSColorToken.surfaceAccentPale)
         case .fixed:
-            Capsule().fill(Color.buttonFixedRest)
+            Capsule().fill(DSColorToken.surfaceLightFixed)
         case .ghost:
             EmptyView()
         }
@@ -216,11 +208,11 @@ private struct DSButtonStyle: ButtonStyle {
     private var backgroundForPressed: some View {
         switch mode {
         case .primary:
-            Capsule().fill(Color.buttonPrimaryPressed)
+            Capsule().fill(DSColorToken.interactAccentAction)
         case .secondary:
-            Capsule().fill(Color.buttonSecondaryPressed)
+            Capsule().fill(DSColorToken.interactAccentPaleAction)
         case .fixed:
-            Capsule().fill(Color.buttonFixedRest.opacity(0.9))
+            Capsule().fill(DSColorToken.interactLightFixedAction)
         case .ghost:
             EmptyView()
         }
@@ -230,18 +222,18 @@ private struct DSButtonStyle: ButtonStyle {
 
     private func foregroundColor(isPressed: Bool) -> Color {
         if isDisabled {
-            return .buttonTextDisabled
+            return DSColorToken.interactIcotexDisable
         }
 
         switch mode {
         case .primary:
-            return .buttonTextOnPrimary
+            return DSColorToken.icotexLightFixed
         case .secondary:
-            return isPressed ? .buttonTextOnSecondaryPressed : .buttonTextOnSecondary
+            return isPressed ? DSColorToken.interactAccentAction : DSColorToken.icotexAccent
         case .ghost:
-            return isPressed ? .buttonTextGhostPressed : .buttonTextGhost
+            return isPressed ? DSColorToken.interactAccentAction : DSColorToken.icotexAccent
         case .fixed:
-            return .buttonTextOnFixed
+            return DSColorToken.icotexDarkFixed
         }
     }
 }
@@ -286,7 +278,7 @@ private struct DSButtonStyle: ButtonStyle {
 
 #Preview("Fixed — on dark background") {
     ZStack {
-        Color(hex: "1E2128").ignoresSafeArea()
+        DSColorToken.surfaceInverted.ignoresSafeArea()
         VStack(spacing: 16) {
             DSButton("Large Fixed", size: .large, mode: .fixed) {}
             DSButton("Medium Fixed", size: .medium, mode: .fixed) {}
@@ -305,14 +297,12 @@ private struct DSButtonStyle: ButtonStyle {
             leadingIcon: Image(systemName: "arrow.left"),
             trailingIcon: Image(systemName: "arrow.right")
         ) {}
-
         DSButton(
             "Leading Only",
             size: .medium,
             mode: .secondary,
             leadingIcon: Image(systemName: "plus")
         ) {}
-
         DSButton(
             "Trailing Only",
             size: .small,
@@ -325,29 +315,12 @@ private struct DSButtonStyle: ButtonStyle {
 
 #Preview("Icon Only — No Label") {
     HStack(spacing: 16) {
-        DSButton(
-            "",
-            size: .large,
-            mode: .primary,
-            leadingIcon: Image(systemName: "plus"),
-            showLabel: false
-        ) {}
-
-        DSButton(
-            "",
-            size: .medium,
-            mode: .secondary,
-            leadingIcon: Image(systemName: "heart.fill"),
-            showLabel: false
-        ) {}
-
-        DSButton(
-            "",
-            size: .small,
-            mode: .ghost,
-            leadingIcon: Image(systemName: "xmark"),
-            showLabel: false
-        ) {}
+        DSButton("", size: .large, mode: .primary,
+                 leadingIcon: Image(systemName: "plus"), showLabel: false) {}
+        DSButton("", size: .medium, mode: .secondary,
+                 leadingIcon: Image(systemName: "heart.fill"), showLabel: false) {}
+        DSButton("", size: .small, mode: .ghost,
+                 leadingIcon: Image(systemName: "xmark"), showLabel: false) {}
     }
     .padding()
 }
@@ -358,7 +331,7 @@ private struct DSButtonStyle: ButtonStyle {
         DSButton("Secondary Disabled", size: .large, mode: .secondary, isDisabled: true) {}
         DSButton("Ghost Disabled", size: .large, mode: .ghost, isDisabled: true) {}
         ZStack {
-            Color(hex: "1E2128")
+            DSColorToken.surfaceInverted
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             DSButton("Fixed Disabled", size: .large, mode: .fixed, isDisabled: true) {}
                 .padding(.horizontal, 16)
@@ -374,7 +347,7 @@ private struct DSButtonStyle: ButtonStyle {
         DSButton("Secondary", size: .large, mode: .secondary) {}
         DSButton("Ghost", size: .large, mode: .ghost) {}
         ZStack {
-            Color(hex: "1E2128")
+            DSColorToken.surfaceInverted
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             DSButton("Fixed", size: .large, mode: .fixed) {}
                 .padding(.horizontal, 16)

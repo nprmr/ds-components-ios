@@ -93,7 +93,7 @@ struct DSCheckbox: View {
     private var focusRingOverlay: some View {
         if state == .focused {
             RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(Color.checkboxFocusRing, lineWidth: 2)
+                .stroke(DSColorToken.outlineAccent, lineWidth: 2)
                 .padding(-2)
         }
     }
@@ -103,22 +103,22 @@ struct DSCheckbox: View {
     private var uncheckedFill: Color {
         switch state {
         case .default, .focused, .error:
-            return .checkboxDefaultFill
+            return DSColorToken.surfacePrimary
         case .pressed:
-            return .checkboxPressedFill
+            return DSColorToken.surfaceSecondary
         case .disabled:
-            return .checkboxDisabledFill
+            return DSColorToken.interactActionDisabled
         }
     }
 
     private var uncheckedStroke: Color {
         switch state {
         case .default, .pressed, .focused:
-            return .checkboxDefaultStroke
+            return DSColorToken.outlineBorder
         case .disabled:
-            return .checkboxDisabledStroke
+            return DSColorToken.interactActionDisabled
         case .error:
-            return .checkboxErrorStroke
+            return DSColorToken.outlineNegative
         }
     }
 
@@ -131,20 +131,20 @@ struct DSCheckbox: View {
     private var checkedFill: Color {
         switch state {
         case .default, .focused:
-            return .checkboxCheckedDefault
+            return DSColorToken.surfaceAccent
         case .pressed:
-            return .checkboxCheckedPressed
+            return DSColorToken.interactAccentAction
         case .disabled:
-            return .checkboxCheckedDisabled
+            return DSColorToken.interactActionDisabled
         case .error:
-            return .checkboxCheckedError
+            return DSColorToken.icotexNegative
         }
     }
 
     // MARK: - Label Color
 
     private var labelColor: Color {
-        state == .disabled ? .checkboxTextDisabled : .checkboxTextDefault
+        state == .disabled ? DSColorToken.interactIcotexDisable : DSColorToken.icotexPrimary
     }
 }
 
