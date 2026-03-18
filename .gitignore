@@ -1,0 +1,20 @@
+# Xcode
+*.xcodeproj/
+xcuserdata/
+*.xcworkspace/
+DerivedData/
+build/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# OpenClaw internal
+.openclaw/
+
+# Workspace meta (keep in repo if desired, remove if private)
+# IDENTITY.md
+# USER.md
+# BOOTSTRAP.md
+# HEARTBEAT.md
