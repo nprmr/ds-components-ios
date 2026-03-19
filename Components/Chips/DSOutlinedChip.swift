@@ -72,8 +72,8 @@ private struct OutlinedChipButtonStyle: ButtonStyle {
             .frame(height: 40)
             .background(backgroundView)
             .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+            .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
+            .animation(.spring(response: 0.25, dampingFraction: 0.6), value: configuration.isPressed)
     }
 
     @ViewBuilder

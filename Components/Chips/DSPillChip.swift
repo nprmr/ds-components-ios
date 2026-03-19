@@ -46,8 +46,8 @@ private struct PillChipButtonStyle: ButtonStyle {
             .foregroundStyle(textColor)
             .background(Capsule().fill(fillColor))
             .contentShape(Capsule())
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+            .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
+            .animation(.spring(response: 0.25, dampingFraction: 0.6), value: configuration.isPressed)
     }
 
     private var fillColor: Color {
