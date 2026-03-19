@@ -4,6 +4,10 @@ struct ComponentCatalogView: View {
     var body: some View {
         NavigationStack {
             List {
+                NavigationLink("🎨 Colors") {
+                    ColorsCatalogView()
+                        .navigationTitle("Colors")
+                }
                 NavigationLink("Button") {
                     ButtonCatalogView()
                         .navigationTitle("DSButton")
