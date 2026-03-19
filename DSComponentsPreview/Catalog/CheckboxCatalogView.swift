@@ -18,16 +18,12 @@ struct CheckboxCatalogView: View {
 
                 sectionView("Unchecked — All States") {
                     DSCheckbox(isChecked: .constant(false), label: "Default", state: .default)
-                    DSCheckbox(isChecked: .constant(false), label: "Pressed", state: .pressed)
-                    DSCheckbox(isChecked: .constant(false), label: "Focused", state: .focused)
                     DSCheckbox(isChecked: .constant(false), label: "Disabled", state: .disabled)
                     DSCheckbox(isChecked: .constant(false), label: "Error", state: .error)
                 }
 
                 sectionView("Checked — All States") {
                     DSCheckbox(isChecked: .constant(true), label: "Default", state: .default)
-                    DSCheckbox(isChecked: .constant(true), label: "Pressed", state: .pressed)
-                    DSCheckbox(isChecked: .constant(true), label: "Focused", state: .focused)
                     DSCheckbox(isChecked: .constant(true), label: "Disabled", state: .disabled)
                     DSCheckbox(isChecked: .constant(true), label: "Error", state: .error)
                 }

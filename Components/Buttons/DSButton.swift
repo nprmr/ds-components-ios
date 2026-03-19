@@ -119,16 +119,16 @@ private struct DSButtonStyle: ButtonStyle {
     let isDisabled: Bool
 
     func makeBody(configuration: Configuration) -> some View {
-        let isPressed = configuration.isPressed
-
         configuration.label
-            .foregroundStyle(foregroundColor(isPressed: isPressed))
+            .foregroundStyle(foregroundColor)
             .padding(.horizontal, paddingH)
             .padding(.vertical, paddingV)
             .frame(height: height)
             .frame(maxWidth: isFullWidth ? .infinity : nil)
-            .background(backgroundView(isPressed: isPressed))
+            .background(backgroundView)
             .contentShape(Rectangle())
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 
     private var height: CGFloat {
@@ -170,7 +170,7 @@ private struct DSButtonStyle: ButtonStyle {
     // MARK: - Background
 
     @ViewBuilder
-    private func backgroundView(isPressed: Bool) -> some View {
+    private var backgroundView: some View {
         switch mode {
         case .ghost:
             if size == .small {
@@ -182,8 +182,6 @@ private struct DSButtonStyle: ButtonStyle {
         default:
             if isDisabled {
                 Capsule().fill(DSColorToken.interactActionDisabled)
-            } else if isPressed {
-                backgroundForPressed
             } else {
                 backgroundForRest
             }
@@ -204,34 +202,19 @@ private struct DSButtonStyle: ButtonStyle {
         }
     }
 
-    @ViewBuilder
-    private var backgroundForPressed: some View {
-        switch mode {
-        case .primary:
-            Capsule().fill(DSColorToken.interactAccentAction)
-        case .secondary:
-            Capsule().fill(DSColorToken.interactAccentPaleAction)
-        case .fixed:
-            Capsule().fill(DSColorToken.interactLightFixedAction)
-        case .ghost:
-            EmptyView()
-        }
-    }
-
     // MARK: - Foreground
 
-    private func foregroundColor(isPressed: Bool) -> Color {
+    private var foregroundColor: Color {
         if isDisabled {
             return DSColorToken.interactIcotexDisable
         }
-
         switch mode {
         case .primary:
             return DSColorToken.icotexLightFixed
         case .secondary:
-            return isPressed ? DSColorToken.interactAccentAction : DSColorToken.icotexAccent
+            return DSColorToken.icotexAccent
         case .ghost:
-            return isPressed ? DSColorToken.interactAccentAction : DSColorToken.icotexAccent
+            return DSColorToken.icotexAccent
         case .fixed:
             return DSColorToken.icotexDarkFixed
         }

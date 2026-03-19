@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - DSChipState
 
 enum DSChipState {
-    case `default`, active, pressed, disabled
+    case `default`, active, disabled
 }
 
 // MARK: - DSPillChip
@@ -42,37 +42,27 @@ private struct PillChipButtonStyle: ButtonStyle {
     let state: DSChipState
 
     func makeBody(configuration: Configuration) -> some View {
-        let isPressed = configuration.isPressed
-
         configuration.label
-            .foregroundStyle(textColor(isPressed: isPressed))
-            .background(backgroundColor(isPressed: isPressed))
+            .foregroundStyle(textColor)
+            .background(Capsule().fill(fillColor))
             .contentShape(Capsule())
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 
-    private func backgroundColor(isPressed: Bool) -> some View {
-        Capsule().fill(fillColor(isPressed: isPressed))
-    }
-
-    private func fillColor(isPressed: Bool) -> Color {
-        if state == .disabled { return DSColorToken.interactActionDisabled }
-        if isPressed { return DSColorToken.interactActionPressed }
+    private var fillColor: Color {
         switch state {
-        case .default: return DSColorToken.surfaceTertiary
-        case .active: return DSColorToken.surfaceAccent
-        case .pressed: return DSColorToken.interactActionPressed
-        case .disabled: return DSColorToken.interactActionDisabled
+        case .default: DSColorToken.surfaceTertiary
+        case .active: DSColorToken.surfaceAccent
+        case .disabled: DSColorToken.interactActionDisabled
         }
     }
 
-    private func textColor(isPressed: Bool) -> Color {
-        if state == .disabled { return DSColorToken.interactIcotexDisable }
-        if isPressed { return DSColorToken.icotexSecondary }
+    private var textColor: Color {
         switch state {
-        case .default: return DSColorToken.icotexPrimary
-        case .active: return DSColorToken.icotexPrimaryInverted
-        case .pressed: return DSColorToken.icotexSecondary
-        case .disabled: return DSColorToken.interactIcotexDisable
+        case .default: DSColorToken.icotexPrimary
+        case .active: DSColorToken.icotexPrimaryInverted
+        case .disabled: DSColorToken.interactIcotexDisable
         }
     }
 }
@@ -84,7 +74,6 @@ private struct PillChipButtonStyle: ButtonStyle {
         HStack(spacing: 8) {
             DSPillChip("Default", state: .default) {}
             DSPillChip("Active", state: .active) {}
-            DSPillChip("Pressed", state: .pressed) {}
             DSPillChip("Disabled", state: .disabled) {}
         }
     }

@@ -4,8 +4,6 @@ import SwiftUI
 
 enum DSCheckboxState {
     case `default`
-    case pressed
-    case focused
     case disabled
     case error
 }
@@ -59,7 +57,6 @@ struct DSCheckbox: View {
             }
         }
         .frame(width: 24, height: 24)
-        .overlay(focusRingOverlay)
     }
 
     // MARK: - Unchecked
@@ -87,25 +84,12 @@ struct DSCheckbox: View {
             .frame(width: 20, height: 20)
     }
 
-    // MARK: - Focus Ring
-
-    @ViewBuilder
-    private var focusRingOverlay: some View {
-        if state == .focused {
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .stroke(DSColorToken.outlineAccent, lineWidth: 2)
-                .padding(-2)
-        }
-    }
-
     // MARK: - Unchecked Colors
 
     private var uncheckedFill: Color {
         switch state {
-        case .default, .focused, .error:
+        case .default, .error:
             return DSColorToken.surfacePrimary
-        case .pressed:
-            return DSColorToken.surfaceSecondary
         case .disabled:
             return DSColorToken.interactActionDisabled
         }
@@ -113,7 +97,7 @@ struct DSCheckbox: View {
 
     private var uncheckedStroke: Color {
         switch state {
-        case .default, .pressed, .focused:
+        case .default:
             return DSColorToken.outlineBorder
         case .disabled:
             return DSColorToken.interactActionDisabled
@@ -130,10 +114,8 @@ struct DSCheckbox: View {
 
     private var checkedFill: Color {
         switch state {
-        case .default, .focused:
+        case .default:
             return DSColorToken.surfaceAccent
-        case .pressed:
-            return DSColorToken.interactAccentAction
         case .disabled:
             return DSColorToken.interactActionDisabled
         case .error:
@@ -153,8 +135,6 @@ struct DSCheckbox: View {
 #Preview("Unchecked — All States") {
     VStack(alignment: .leading, spacing: 16) {
         DSCheckbox(isChecked: .constant(false), label: "Default", state: .default)
-        DSCheckbox(isChecked: .constant(false), label: "Pressed", state: .pressed)
-        DSCheckbox(isChecked: .constant(false), label: "Focused", state: .focused)
         DSCheckbox(isChecked: .constant(false), label: "Disabled", state: .disabled)
         DSCheckbox(isChecked: .constant(false), label: "Error", state: .error)
     }
@@ -164,8 +144,6 @@ struct DSCheckbox: View {
 #Preview("Checked — All States") {
     VStack(alignment: .leading, spacing: 16) {
         DSCheckbox(isChecked: .constant(true), label: "Default", state: .default)
-        DSCheckbox(isChecked: .constant(true), label: "Pressed", state: .pressed)
-        DSCheckbox(isChecked: .constant(true), label: "Focused", state: .focused)
         DSCheckbox(isChecked: .constant(true), label: "Disabled", state: .disabled)
         DSCheckbox(isChecked: .constant(true), label: "Error", state: .error)
     }

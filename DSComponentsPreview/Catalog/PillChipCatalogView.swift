@@ -12,7 +12,6 @@ struct PillChipCatalogView: View {
                     HStack(spacing: 8) {
                         DSPillChip("Default", state: .default) {}
                         DSPillChip("Active", state: .active) {}
-                        DSPillChip("Pressed", state: .pressed) {}
                         DSPillChip("Disabled", state: .disabled) {}
                     }
                 }
@@ -30,8 +29,8 @@ struct PillChipCatalogView: View {
                     }
                 }
 
-                sectionView("Press & Release") {
-                    Text("Tap chips above to see press animation")
+                sectionView("Press Effect") {
+                    Text("Tap chips to see scale animation")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

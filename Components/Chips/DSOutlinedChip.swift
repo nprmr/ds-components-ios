@@ -64,60 +64,49 @@ private struct OutlinedChipButtonStyle: ButtonStyle {
     let hasTrailing: Bool
 
     func makeBody(configuration: Configuration) -> some View {
-        let isPressed = configuration.isPressed
-
         configuration.label
-            .foregroundStyle(textColor(isPressed: isPressed))
+            .foregroundStyle(textColor)
             .padding(.leading, hasLeading ? 12 : 16)
             .padding(.trailing, hasTrailing ? 12 : 16)
             .padding(.vertical, 8)
             .frame(height: 40)
-            .background(backgroundView(isPressed: isPressed))
+            .background(backgroundView)
             .contentShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 
     @ViewBuilder
-    private func backgroundView(isPressed: Bool) -> some View {
-        let fill = fillColor(isPressed: isPressed)
-        let stroke = strokeColor(isPressed: isPressed)
-
+    private var backgroundView: some View {
         RoundedRectangle(cornerRadius: 12, style: .continuous)
-            .fill(fill)
+            .fill(fillColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .stroke(stroke, lineWidth: 2)
+                    .stroke(strokeColor, lineWidth: 2)
             )
     }
 
-    private func fillColor(isPressed: Bool) -> Color {
-        if isPressed && state != .disabled { return DSColorToken.interactActionPressed }
+    private var fillColor: Color {
         switch state {
-        case .default: return .clear
-        case .active: return DSColorToken.surfaceAccentPale
-        case .pressed: return DSColorToken.interactActionPressed
-        case .disabled: return .clear
+        case .default: .clear
+        case .active: DSColorToken.surfaceAccentPale
+        case .disabled: .clear
         }
     }
 
-    private func strokeColor(isPressed: Bool) -> Color {
-        if isPressed && state != .disabled { return DSColorToken.outlineLightFixed }
+    private var strokeColor: Color {
         switch state {
-        case .default: return DSColorToken.outlineBorder
-        case .active: return DSColorToken.outlineAccent
-        case .pressed: return DSColorToken.outlineLightFixed
-        case .disabled: return DSColorToken.outlineBorder
+        case .default: DSColorToken.outlineBorder
+        case .active: DSColorToken.outlineAccent
+        case .disabled: DSColorToken.outlineBorder
         }
     }
 
-    // ⚠️ Text colors assumed by analogy with pill chip — needs designer confirmation
-    private func textColor(isPressed: Bool) -> Color {
-        if state == .disabled { return DSColorToken.interactIcotexDisable }
-        if isPressed { return DSColorToken.icotexSecondary }
+    private var textColor: Color {
         switch state {
-        case .default: return DSColorToken.icotexPrimary
-        case .active: return DSColorToken.icotexPrimaryInverted
-        case .pressed: return DSColorToken.icotexSecondary
-        case .disabled: return DSColorToken.interactIcotexDisable
+        case .default: DSColorToken.icotexPrimary
+        case .active: DSColorToken.icotexAccent
+        case .disabled: DSColorToken.interactIcotexDisable
         }
     }
 }
@@ -128,7 +117,6 @@ private struct OutlinedChipButtonStyle: ButtonStyle {
     VStack(spacing: 12) {
         DSOutlinedChip("Default", state: .default) {}
         DSOutlinedChip("Active", state: .active) {}
-        DSOutlinedChip("Pressed", state: .pressed) {}
         DSOutlinedChip("Disabled", state: .disabled) {}
     }
     .padding()

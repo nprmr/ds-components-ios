@@ -12,7 +12,6 @@ struct OutlinedChipCatalogView: View {
                     VStack(spacing: 12) {
                         DSOutlinedChip("Default", state: .default) {}
                         DSOutlinedChip("Active", state: .active) {}
-                        DSOutlinedChip("Pressed", state: .pressed) {}
                         DSOutlinedChip("Disabled", state: .disabled) {}
                     }
                 }
